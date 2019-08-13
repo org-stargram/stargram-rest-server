@@ -56,4 +56,18 @@ public class User implements Serializable {
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
     }
+
+    public void setCreatedDateNow() {
+        this.createdDate = LocalDateTime.now();
+    }
+    public void setSocialType(SocialType socialType) {
+        this.socialType = socialType;
+    }
+
+    public void update(User user) {
+        this.name = user.getName();
+        this.password = user.getPassword();
+        this.email = user.getEmail();
+        this.updatedDate = LocalDateTime.now();
+    }
 }
