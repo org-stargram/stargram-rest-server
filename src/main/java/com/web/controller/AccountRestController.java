@@ -14,6 +14,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static com.web.domain.enums.SocialType.DEFAULT;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -34,7 +37,18 @@ public class AccountRestController {
 
         user.setSocialType(DEFAULT);
         user.setCreatedDateNow();
-        userRepository.save(user);
+
+        User domainUser = userRepository.findByEmail(user.getEmail());
+
+        if (domainUser != null) {
+            if (domainUser.getSocialType().equals(DEFAULT)) {
+                return null;
+            } else {
+                userRepository.save(user);
+            }
+        } else {
+            userRepository.save(user);
+        }
 
         return new ResponseEntity<>("{}", HttpStatus.CREATED);
     }

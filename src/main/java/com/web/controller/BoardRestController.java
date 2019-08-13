@@ -37,9 +37,6 @@ public class BoardRestController {
     @PostMapping
     public ResponseEntity<?> postBoard(@RequestBody Board board) {
         //valid 체크
-        System.out.println(board);
-        System.out.println(board.getIdx());
-        System.out.println(board.getTitle());
 
         board.setCreatedDateNow();
         boardRepository.save(board);
